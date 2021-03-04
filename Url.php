@@ -4,7 +4,7 @@ class Url {
         $code = '';
         $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLOMNOPQRSTUVWXYZ';
         for ($i = 0; $i < $length; $i++) {
-            $code .= $pattern{mt_rand(0,63)};
+            $code .= $pattern[mt_rand(0, strlen($pattern) - 1)];
         }
 
         return $code;
