@@ -1,17 +1,25 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'Database.php';
+require_once 'Url.php';
 
 $db = new Database();
 
-if (!empty($_GET['code'])) {
+if (isset($_GET['code'])) {
+    print_r($_GET['code']);
     $url = $db->getUrl($_GET['code'])->fetch_assoc()['url'];
     header("location:" . $url);
 }
 
-if (!empty($_POST['url'])) {
-    $code = $db->store($_POST['url']);
-    $new_url = $_ENV['APP_URL'] . '/' . $code;
+if (isset($_POST['url'])) {
+    $url = new Url();
+    $result = '';
+    if ($url->checkUrlVerify($_POST['url'])) {
+        $code = $db->store($_POST['url']);
+        $result = $_ENV['APP_URL'] . '/' . $code;
+    } else {
+        $result = "Please input a valid URL";
+    }
 }
 ?>
 
@@ -27,15 +35,15 @@ if (!empty($_POST['url'])) {
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 <body class="bg-secondary text-white">
-<div class="container">
-    <h1 class="text-center mt-5">URL Shortener</h1>
+<div class="container mt-5">
+    <h1 class="text-center mb-3">URL Shortener</h1>
     <form class="input-group mb-3" action="./index.php" method="POST">
         <input class="form-control" type="text" name="url" placeholder="input the url here">
         <input class="input-group-text bg-primary" type="submit" name="Submit" value="送出">
     </form>
     <?php
-    if (isset($new_url)) {
-        echo '<div class="alert alert-success" role="alert">' . $new_url . '</div>';
+    if (isset($result)) {
+        echo '<div class="alert alert-success" role="alert">' . $result . '</div>';
     }
     ?>
 </div>

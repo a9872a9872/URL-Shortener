@@ -9,4 +9,13 @@ class Url {
 
         return $code;
     }
+
+    public function checkUrlVerify($url): bool {
+        $ch = curl_init();
+        curl_setopt($ch , CURLOPT_URL , "{$url}");
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return $result;
+    }
 }
