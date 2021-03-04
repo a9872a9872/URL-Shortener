@@ -11,7 +11,7 @@ if (!empty($_GET['code'])) {
 
 if (!empty($_POST['url'])) {
     $code = $db->store($_POST['url']);
-    $new_url = $_ENV['HOST_URL'] . '/' . $code;
+    $new_url = $_ENV['APP_URL'] . '/' . $code;
 }
 ?>
 
