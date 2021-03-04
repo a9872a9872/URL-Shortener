@@ -6,8 +6,7 @@ require_once 'Url.php';
 $db = new Database();
 
 if (isset($_GET['code'])) {
-    print_r($_GET['code']);
-    $url = $db->getUrl($_GET['code'])->fetch_assoc()['url'];
+    $url = $db->getUrl($_GET['code'])->fetch_assoc()['url'] ?? null;
     header("location:" . $url);
 }
 
