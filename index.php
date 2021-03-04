@@ -4,6 +4,11 @@ require_once 'Database.php';
 
 $db = new Database();
 
+if (!empty($_GET['code'])) {
+    $url = $db->getUrl($_GET['code'])->fetch_assoc()['url'];
+    header("location:" . $url);
+}
+
 if (!empty($_POST['url'])) {
     $code = $db->store($_POST['url']);
     $new_url = $_ENV['HOST_URL'] . '/' . $code;

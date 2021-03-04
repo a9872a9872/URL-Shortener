@@ -36,6 +36,13 @@ class Database {
         }
     }
 
+    public function getUrl($code) {
+        $code = addslashes($code);
+        $sql = "SELECT url FROM url WHERE code = '$code'";
+
+        return $this->conn->query($sql);
+    }
+
     /**
      * disconnect the database
      *
